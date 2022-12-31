@@ -12,6 +12,7 @@ h1{
 .btn {
     font-family: 'Passion One', cursive;
     color: black;
+    margin: 1rem;
 }
 
 .nav-link{
@@ -24,3 +25,6 @@ h1{
     padding-left: .5rem;
 }
 
+.form-box{
+    padding: .5rem;
+}

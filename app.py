@@ -74,7 +74,7 @@ def register():
 
         # This line will authenticate the user with Flask-Login
         login_user(new_user)
-        return redirect(url_for('get_all_posts'))
+        return redirect(url_for('rehearsal'))
     return render_template("register.html", form=form, logged_in=current_user.is_authenticated)
 
 

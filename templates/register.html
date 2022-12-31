@@ -1,11 +1,16 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% include "header.html" %}
 
+<!--Registration card-->
+<div id="registration-card"  class="container text-center w-50">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
-      </div>
-    </div>
+        <h1>Register 🎻</h1>
   </div>
-
+  <div class="card text-center mb-3 shadow p-3 mb-5 bg-white rounded">
+      <div class="card-body">
+          <div class="form-box mx-auto">
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+          </div>
+      </div>
+  </div>
+</div>
