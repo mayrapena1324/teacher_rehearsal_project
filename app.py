@@ -1,10 +1,11 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from functools import wraps
 from flask import abort
-
+from forms import RegisterForm
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # configure flask
 app = Flask(__name__)
@@ -32,7 +33,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(250))
     name = db.Column(db.String(250), nullable=False)
-
+db.create_all()
 
 # Create admin-only decorator
 def admin_only(f):
@@ -45,6 +46,33 @@ def admin_only(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
+
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        if User.query.filter_by(email=form.email.data).first():
+            # User already exists
+            flash("You've already signed up with that email, log in instead!")
+            return redirect(url_for('login'))
+        secured_password = generate_password_hash(
+            form.password.data,
+            method='pbkdf2:sha256',
+            salt_length=8)
+
+        new_user = User(
+            email=form.email.data,
+            password=secured_password,
+            name=form.name.data,
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        # This line will authenticate the user with Flask-Login
+        login_user(new_user)
+        return redirect(url_for('get_all_posts'))
+    return render_template("register.html", form=form, logged_in=current_user.is_authenticated)
 
 
 @app.route("/", methods=["GET", "POST"])
