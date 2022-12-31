@@ -33,7 +33,10 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(250))
     name = db.Column(db.String(250), nullable=False)
-db.create_all()
+
+
+# with app.app_context():
+#     db.create_all()
 
 # Create admin-only decorator
 def admin_only(f):
