@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
+from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user, login_required
 from functools import wraps
 from flask import abort
 from forms import RegisterForm, LoginForm
@@ -114,7 +114,10 @@ def index():
 
 @app.route("/rehearsal", methods=["GET", "POST"])
 def rehearsal():
-    return render_template("rehearsal.html")
+    if not current_user.is_authenticated:
+        flash("You need to login or register to start rehearsing.")
+        return redirect(url_for("login"))
+    return render_template("rehearsal.html", current_user=current_user, logged_in=current_user.is_authenticated)
 
 
 @app.route("/faq", methods=["GET", "POST"])
