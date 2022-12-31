@@ -78,6 +78,7 @@ def register():
     return render_template("register.html", form=form, logged_in=current_user.is_authenticated)
 
 
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     return render_template("index.html")
