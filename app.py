@@ -101,9 +101,15 @@ def login():
     return render_template("login.html", form=form, current_user=current_user, logged_in=current_user.is_authenticated)
 
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    return render_template("index.html",  current_user=current_user, logged_in=current_user.is_authenticated)
 
 
 @app.route("/rehearsal", methods=["GET", "POST"])
