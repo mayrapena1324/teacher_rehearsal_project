@@ -45,6 +45,8 @@ def admin_only(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     return render_template("index.html")
