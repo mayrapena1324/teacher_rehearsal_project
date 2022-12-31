@@ -1,12 +1,17 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
 
 
 # configure flask
 app = Flask(__name__)
-# app.config['SECRET_KEY'] = 'SECRET_APP_KEY'
+app.config['SECRET_KEY'] = 'SECRET_APP_KEY'
 Bootstrap(app)
 
+##CONNECT TO DB
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///rehearsify.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -17,9 +22,11 @@ def index():
 def rehearsal():
     return render_template("rehearsal.html")
 
+
 @app.route("/faq", methods=["GET", "POST"])
 def faq():
     return render_template("faq.html")
+
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
