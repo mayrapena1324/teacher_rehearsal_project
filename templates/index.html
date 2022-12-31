@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Orchestra Rehearsal</title>
-</head>
+{% include "header.html" %}
+
+<html>
 <body>
-<h1>Welcome to your Orchestra Rehearsal! 🎻</h1>
+<div id="landing-card" class="container-fluid text-center">
+    <div class="container-fluid h-100">
+        <h1>Welcome to Rehearsify 🎻</h1>
+    </div>
+    <div class="card text-center mb-3 mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Want to maximize your precious Ensemble time?</h5>
+        <p class="card-text">Get ready to have an amazing rehearsal and see results</p>
+        <a href="{{ url_for('rehearsal') }}" class="btn btn-outline-dark btn-lg">Rehearse</a>
+      </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>

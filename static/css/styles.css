@@ -1,0 +1,26 @@
+body{
+   background-image: linear-gradient(to left, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+}
+h1{
+    font-family: 'Passion One', cursive;
+    color: white;
+}
+#landing-card{
+    margin: 3rem, 3rem;
+}
+
+.btn {
+    font-family: 'Passion One', cursive;
+    color: black;
+}
+
+.nav-link{
+    color: white;
+}
+
+.navbar-brand {
+    font-family: 'Passion One', cursive;
+    font-size: xx-large;
+    padding-left: .5rem;
+}
+
