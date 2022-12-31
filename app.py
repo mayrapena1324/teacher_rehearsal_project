@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from functools import wraps
 from flask import abort
-from forms import RegisterForm
+from forms import RegisterForm, LoginForm
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # configure flask
@@ -74,9 +74,31 @@ def register():
 
         # This line will authenticate the user with Flask-Login
         login_user(new_user)
-        return redirect(url_for('rehearsal'))
+        return redirect(url_for('index'))
     return render_template("register.html", form=form, logged_in=current_user.is_authenticated)
 
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        # Find user by email entered.
+        user = User.query.filter_by(email=email).first()
+        # Email doesn't exist
+        if not user:
+            flash("That email does not exist, please try again.")
+            return redirect(url_for('login'))
+        # Password incorrect
+        elif not check_password_hash(user.password, password):
+            flash('Password incorrect, please try again.')
+            return redirect(url_for('login'))
+        # Email exists and password correct
+        else:
+            login_user(user)
+            return redirect(url_for('index'))
+    return render_template("login.html", form=form, current_user=current_user, logged_in=current_user.is_authenticated)
 
 
 @app.route("/", methods=["GET", "POST"])
