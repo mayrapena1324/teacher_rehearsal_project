@@ -7,7 +7,7 @@
         {% if not logged_in: %}
         <h1>Welcome to Rehearsify 🎻</h1>
         {% else %}
-        <h1>Welcome, {{current_user.name }} 🎻</h1>
+        <h1>Welcome, {{current_user.first_name }} 🎻</h1>
         {% endif %}
     </div>
     <div class="card text-center mb-3 mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">

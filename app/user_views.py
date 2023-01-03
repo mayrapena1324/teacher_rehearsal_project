@@ -1,5 +1,4 @@
 from flask_login import logout_user, current_user
-
 from app import app
 from flask import render_template, url_for, redirect, flash
 

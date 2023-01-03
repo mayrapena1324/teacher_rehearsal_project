@@ -2,7 +2,7 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user, login_required
+from flask_login import UserMixin, LoginManager
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "This is a secret not for use in production"
