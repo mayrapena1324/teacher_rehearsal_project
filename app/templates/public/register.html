@@ -1,5 +1,10 @@
+{% extends "public/templates/public_template.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% include "header.html" %}
+
+{% block title %}Rehearsal{% endblock%}
+
+{% block main %}
+
 
 <!--Registration card-->
 <div id="registration-card"  class="container text-center w-50">
@@ -12,3 +17,5 @@
       </div>
   </div>
 </div>
+
+{% endblock %}

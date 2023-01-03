@@ -34,7 +34,7 @@ def register():
         # This line will authenticate the user with Flask-Login
         login_user(new_user)
         return redirect(url_for('index'))
-    return render_template("register.html", form=form, logged_in=current_user.is_authenticated)
+    return render_template("public/register.html", form=form, logged_in=current_user.is_authenticated)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -57,14 +57,14 @@ def login():
         else:
             login_user(user)
             return redirect(url_for('index'))
-    return render_template("login.html", form=form, current_user=current_user, logged_in=current_user.is_authenticated)
+    return render_template("public/login.html", form=form, current_user=current_user, logged_in=current_user.is_authenticated)
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html",  current_user=current_user, logged_in=current_user.is_authenticated)
+    return render_template("public/index.html",  current_user=current_user, logged_in=current_user.is_authenticated)
 
 
 @app.route("/faq", methods=["GET", "POST"])
 def faq():
-    return render_template("faq.html")
+    return render_template("public/faq.html")
