@@ -3,10 +3,18 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager
+from flask_ckeditor import CKEditor
+
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "This is a secret not for use in production"
 
+if app.config["DEBUG"]:
+    app.config.from_object("config.DevelopmentConfig")
+
+else:
+    app.config.from_object("config.Config")
+
+ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ##CONNECT TO DB
@@ -33,6 +41,21 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(250), nullable=False)
     last_name = db.Column(db.String(250), nullable=False)
 
+
+class Rehearsal(db.Model):
+    __tablename__ = "rehearsals"
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, unique=True, nullable=False)
+    warm_up = db.Column(db.Text, nullable=True)
+    fundamentals = db.Column(db.Text, nullable=True)
+    music = db.Column(db.Text, nullable=True)
+
+
+# This will store the uploads a user makes. Need to be tied to rehearsal? or user?
+# class Upload(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     filename = db.Column(db.String(50))
+#     data = db.Column(db.LargeBinary)
 
 with app.app_context():
     db.create_all()
