@@ -11,6 +11,10 @@
             <h1>Welcome to your Orchestra Rehearsal 🎻</h1>
             <h2>Let's start off by tuning!</h2>
             <hr>
+            <form action="/rehearsal" method="post" >
+            {{ ckeditor.create() }}
+            <input type="submit">
+</form>
         </div>
     </div>
 </div>
@@ -27,9 +31,9 @@
         <div class="col">
             <h2>Warm-ups</h2>
             <div class="col-lg-8 col-md-10 mx-auto">
+
                 {{ ckeditor.load() }}
                 {{ ckeditor.config(name='body') }}
-                {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
             </div>
         </div>
     </div>

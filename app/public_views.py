@@ -1,12 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy
-from app import app, User
+from app import app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, current_user
 from flask import render_template, redirect, url_for, flash
 from app.forms import RegisterForm, LoginForm
-
-
-db = SQLAlchemy(app)
+from main import User
 
 
 @app.route('/register', methods=["GET", "POST"])
@@ -62,7 +59,7 @@ def login():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    print(app.config["DEBUG"])
+    # print(app.config["DEBUG"])
     return render_template("public/index.html",  current_user=current_user, logged_in=current_user.is_authenticated)
 
 
