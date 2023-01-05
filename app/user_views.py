@@ -1,7 +1,7 @@
 from flask_login import logout_user, current_user
-from app import app
-from main import Rehearsal
 from flask import render_template, url_for, redirect, flash
+from flask import current_app as app
+from .models import db, Rehearsal
 
 
 @app.route('/logout')
