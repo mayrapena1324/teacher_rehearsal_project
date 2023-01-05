@@ -17,7 +17,7 @@ def create_app():
         app.config.from_object("config.Config")
 
     db.init_app(app)
-    ckeditor = CKEditor(app)
+    CKEditor(app)
     Bootstrap(app)
     with app.app_context():
         from . import user_views, public_views  # Import routes
@@ -25,6 +25,3 @@ def create_app():
 
         return app
 
-
-# importing views files to avoid a circular import
-#
