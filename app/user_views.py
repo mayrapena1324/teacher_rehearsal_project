@@ -1,4 +1,4 @@
-from flask_login import logout_user, current_user
+from flask_login import logout_user, current_user, login_required
 from flask import render_template, url_for, redirect, flash, request
 from flask import current_app as app
 from .models import db, Rehearsal
@@ -23,3 +23,21 @@ def rehearsal():
         return redirect(request.url)
     return render_template("user/rehearsal.html", form=form, current_user=current_user,
                            logged_in=current_user.is_authenticated)
+
+
+@app.route("/rehearsal/warm-up")
+@login_required
+def warm_up():
+    return render_template("user/warm_up.html")
+
+
+@app.route("/rehearsal/music")
+@login_required
+def music():
+    return render_template("user/music.html")
+
+
+@app.route("/rehearsal/goals")
+@login_required
+def goals():
+    return render_template("user/goals.html")
