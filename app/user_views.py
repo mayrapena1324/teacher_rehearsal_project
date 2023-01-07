@@ -10,6 +10,12 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route("/all-rehearsals")
+@login_required
+def all_rehearsals():
+    return render_template('user/all_rehearsals.html')
+
+
 @app.route("/rehearsal", methods=["GET", "POST"])
 def rehearsal():
     if not current_user.is_authenticated:
