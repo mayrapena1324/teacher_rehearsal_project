@@ -18,20 +18,20 @@
 <!---->
 <!--Card for rehearsal -->
 <div class="container">
-    <div class="card text-center">
+    <div class="card shadow p-3 mb-5 bg-white rounded text-center">
         <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
+            <ul class="nav nav-tabs card-header-tabs ">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('rehearsal') }}">Tuning</a>
+                    <a class="nav-link card-nav" href="{{ url_for('rehearsal') }}">Tuning</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ url_for('warm_up') }}">Warm up</a>
+                    <a class="nav-link card-nav active" href="{{ url_for('warm_up') }}">Warm up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('music') }}">Music</a>
+                    <a class="nav-link card-nav" href="{{ url_for('music') }}">Music</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('goals') }}">Goals</a>
+                    <a class="nav-link card-nav" href="{{ url_for('goals') }}">Goals</a>
                 </li>
             </ul>
         </div>
