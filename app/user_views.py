@@ -54,3 +54,18 @@ def goals():
 @login_required
 def create():
     return render_template("user/create.html")
+
+
+@app.route("/rehearsal/create/warm-up")
+def create_warmup():
+    return render_template("user/create_warmup.html")
+
+
+@app.route("/rehearsal/create/music")
+def create_music():
+    return render_template("user/create_music.html")
+
+
+@app.route("/rehearsal/create/goals")
+def create_goals():
+    return render_template("user/create_goals.html")
