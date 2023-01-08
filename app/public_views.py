@@ -65,4 +65,4 @@ def index():
 
 @app.route("/faq", methods=["GET", "POST"])
 def faq():
-    return render_template("public/faq.html")
+    return render_template("public/faq.html", current_user=current_user, logged_in=current_user.is_authenticated)

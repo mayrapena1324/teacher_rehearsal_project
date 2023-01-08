@@ -13,7 +13,8 @@ def logout():
 @app.route("/all-rehearsals")
 @login_required
 def all_rehearsals():
-    return render_template('user/all_rehearsals.html')
+    return render_template('user/all_rehearsals.html', current_user=current_user,
+                           logged_in=current_user.is_authenticated)
 
 
 @app.route("/rehearsal", methods=["GET", "POST"])
@@ -34,16 +35,22 @@ def rehearsal():
 @app.route("/rehearsal/warm-up")
 @login_required
 def warm_up():
-    return render_template("user/warm_up.html")
+    return render_template("user/warm_up.html", current_user=current_user, logged_in=current_user.is_authenticated)
 
 
 @app.route("/rehearsal/music")
 @login_required
 def music():
-    return render_template("user/music.html")
+    return render_template("user/music.html", current_user=current_user, logged_in=current_user.is_authenticated)
 
 
 @app.route("/rehearsal/goals")
 @login_required
 def goals():
-    return render_template("user/goals.html")
+    return render_template("user/goals.html", current_user=current_user, logged_in=current_user.is_authenticated)
+
+
+@app.route("/rehearsal/create")
+@login_required
+def create():
+    return render_template("user/create.html")

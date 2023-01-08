@@ -15,42 +15,16 @@
 </div>
 <!--Add a create rehearsal button-->
 
-
-<!---->
-<!--Card for rehearsal -->
 <div class="container">
-    <div class="card shadow p-3 mb-5 bg-white rounded text-center">
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
-                <li class="nav-item">
-                    <a class="nav-link card-nav active" href="{{ url_for('rehearsal') }}">Tuning</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('warm_up') }}">Warm up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('music') }}">Music</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('goals') }}">Goals</a>
-                </li>
-            </ul>
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Let's Start Tuning</h5>
-            <div class="card-body">
-                <div class="container-sm tuner">
-                    <iframe width="100%" height="110px"
-                            src="https://gtdb.org/violin_tuner_embed/index.html?background_colour=ffffff&main_colour=000000&text_colour=ffffff&active_colour=008000&active_colour_text=000000&default_sound=pizzicato2&htz=440"
-                            scrolling="no" title="Guitar Tunings Database Violin Tuner"
-                            style="padding: 0!important;border:none!important;overflow: hidden;">
-                    </iframe>
-                </div>
-            </div>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+    <div class="row">
+        <div class="col">
+            <a href="{{ url_for('create') }}" class= "btn btn-outline-dark btn-lg">Create Rehearsal</a>
         </div>
     </div>
 </div>
+<!---->
+<!--Card for rehearsal- all rehearsals in data base with filter  -->
+
 
 <!--                     -->
 <!--        Metronome             -->
