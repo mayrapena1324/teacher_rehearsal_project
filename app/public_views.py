@@ -53,7 +53,7 @@ def login():
         # Email exists and password correct
         else:
             login_user(user)
-            return redirect(url_for('all_rehearsals'))
+            return redirect(url_for('get_all_rehearsals'))
     return render_template("public/login.html", form=form, current_user=current_user, logged_in=current_user.is_authenticated)
 
 

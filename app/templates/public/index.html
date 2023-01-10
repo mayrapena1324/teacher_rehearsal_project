@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock%}
 
 {% block main%}
-<div id="landing-card" class="container-fluid text-center">
+<div id="landing-card" class="container-fluid text-center" xmlns:logged_in="http://www.w3.org/1999/xhtml">
     <div class="container-fluid h-100">
         {% if not logged_in: %}
         <h1>Welcome to Rehearsify 🎻</h1>
@@ -12,11 +12,19 @@
         {% endif %}
     </div>
     <div class="card text-center mb-3 mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Want to maximize your precious Ensemble time?</h5>
-        <p class="card-text">Get ready to have an amazing rehearsal and see results</p>
-        <a href="{{ url_for('rehearsal') }}" class="btn btn-outline-dark btn-lg">Rehearse</a>
-      </div>
+        <div class="card-body">
+            <h5 class="card-title">Want to maximize your precious Ensemble time?</h5>
+            <p class="card-text">Get ready to have an amazing rehearsal and see results</p>
+
+            <a
+                    {% if not logged_in: %}
+                    href="{{ url_for('login') }}"
+                    {% else %}
+                    href="{{ url_for('get_all_rehearsals') }}"
+                    {% endif %}
+                    class="btn btn-outline-dark btn-lg">Rehearse
+            </a>
+        </div>
     </div>
 </div>
 {% endblock%}

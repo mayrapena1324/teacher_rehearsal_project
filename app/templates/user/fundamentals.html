@@ -2,46 +2,40 @@
 
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Create Goals{% endblock%}
+{% block title %}Fundamentals{% endblock%}
 
 {% block main%}
-<!--Welcome-->
-<div class="container text-center">
-    <div class="row">
-        <div class="col">
-            <h1>Create your rehearsal 🎻</h1>
-        </div>
-    </div>
-</div>
-
 
 <!---->
 <!--Card for rehearsal -->
 <div class="container">
     <div class="card shadow p-3 mb-5 bg-white rounded text-center">
         <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
+            <ul class="nav nav-tabs card-header-tabs ">
                 <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('create') }}">Tuning</a>
+                    <a class="nav-link card-nav" href="{{ url_for('rehearsal', rehearsal_id=rehearsal.id) }}">Tuning</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('create_warmup') }}">Warm up</a>
+                    <a class="nav-link card-nav" href="{{ url_for('warm_up', rehearsal_id=rehearsal.id) }}">Warm up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('create_music') }}">Music</a>
+                    <a class="nav-link card-nav active" href="{{ url_for('fundamentals', rehearsal_id=rehearsal.id) }}">Fundamentals</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link card-nav active" href="{{ url_for('create_goals') }}">Goals</a>
+                    <a class="nav-link card-nav" href="{{ url_for('music', rehearsal_id=rehearsal.id) }}">Music</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link card-nav" href="{{ url_for('goals', rehearsal_id=rehearsal.id) }}">Goals</a>
+                </li>
+
             </ul>
         </div>
         <div class="card-body">
-            <h5 class="card-title">Goals</h5>
-            <div class="card-body">
-                <div class="container-sm tuner">
-
-                </div>
+            <h5 class="card-title">Fundamentals</h5>
+            <div class="card-text">
+                <p>{{rehearsal.warm_up}}</p>
             </div>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
     </div>
 </div>

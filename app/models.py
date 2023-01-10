@@ -23,6 +23,8 @@ class Rehearsal(db.Model):
     warm_up = db.Column(db.Text, nullable=True)
     fundamentals = db.Column(db.Text, nullable=True)
     music = db.Column(db.Text, nullable=True)
+    # goals = db.Column(db.Text, nullable=True)
+    #title ??? add class ?
 
 
 # CONFIGURE FLASK_LOGIN
