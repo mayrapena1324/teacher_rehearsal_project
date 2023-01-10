@@ -73,7 +73,8 @@ def warm_up(rehearsal_id):
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
     if request.method == "POST":
         return redirect(request.url)
-    return render_template("user/warm_up.html", rehearsal=requested_rehearsal)
+    return render_template("user/warm_up.html", rehearsal=requested_rehearsal, current_user=current_user,
+                           logged_in=current_user.is_authenticated)
 
 
 @app.route("/rehearsal/<rehearsal_id>/music", methods=["GET", "POST"])
@@ -82,7 +83,8 @@ def music(rehearsal_id):
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
     if request.method == "POST":
         return redirect(request.url)
-    return render_template("user/music.html", rehearsal=requested_rehearsal)
+    return render_template("user/music.html", rehearsal=requested_rehearsal, current_user=current_user,
+                           logged_in=current_user.is_authenticated)
 
 
 @app.route("/rehearsal/<rehearsal_id>/goals", methods=["GET", "POST"])
@@ -91,7 +93,8 @@ def goals(rehearsal_id):
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
     if request.method == "POST":
         return redirect(request.url)
-    return render_template("user/goals.html", rehearsal=requested_rehearsal)
+    return render_template("user/goals.html", rehearsal=requested_rehearsal, current_user=current_user,
+                           logged_in=current_user.is_authenticated)
 
 
 @app.route("/rehearsal/<rehearsal_id>/fundamentals", methods=["GET", "POST"])
@@ -100,7 +103,8 @@ def fundamentals(rehearsal_id):
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
     if request.method == "POST":
         return redirect(request.url)
-    return render_template("user/fundamentals.html", rehearsal=requested_rehearsal)
+    return render_template("user/fundamentals.html", rehearsal=requested_rehearsal, current_user=current_user,
+                           logged_in=current_user.is_authenticated)
 
 
 @app.route("/delete/<int:rehearsal_id>")
