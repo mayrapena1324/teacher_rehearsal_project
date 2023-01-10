@@ -21,7 +21,7 @@ def create_app():
     Bootstrap(app)
     with app.app_context():
         from . import user_views, public_views  # Import routes
-        db.create_all()  # Create sql tables for our data models
+        # db.create_all()  # Create sql tables for our data models
 
         return app
 

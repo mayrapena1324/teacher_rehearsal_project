@@ -1,5 +1,6 @@
+from flask_ckeditor import CKEditorField
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, DateField
 from wtforms.validators import DataRequired, URL
 
 
@@ -17,3 +18,11 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log in')
+
+
+# Rehearsal Form
+class RehearsalForm(FlaskForm):
+    date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
+    warm_up = CKEditorField('Warm up Content', validators=[DataRequired()])
+    fundamentals = CKEditorField('Fundamentals Content', validators=[DataRequired()])
+    music = CKEditorField('Music Content', validators=[DataRequired()])

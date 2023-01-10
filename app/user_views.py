@@ -2,6 +2,8 @@ from flask_login import logout_user, current_user, login_required
 from flask import render_template, url_for, redirect, flash, request
 from flask import current_app as app
 from .models import db, Rehearsal
+from .forms import RehearsalForm
+from datetime import datetime, date
 
 
 @app.route('/logout')
@@ -50,15 +52,43 @@ def goals():
     return render_template("user/goals.html", current_user=current_user, logged_in=current_user.is_authenticated)
 
 
-@app.route("/rehearsal/create")
+@app.route("/rehearsal/create", methods=["GET", "POST"])
 @login_required
 def create():
-    return render_template("user/create.html")
+    form = RehearsalForm()
+    if request.method == "POST":
+        req = request.form
+        r_date = req.get("date")
+
+        # Use strptime to convert the string to a datetime object
+        date = datetime.strptime(r_date, '%Y-%m-%d').date()
+
+        entry = Rehearsal(
+            date=date
+        )
+        db.session.add(entry)
+        db.session.commit()
+        print("Success")
+        return redirect(url_for('rehearsal'))
+    return render_template("user/create.html", form=form)
 
 
-@app.route("/rehearsal/create/warm-up")
-def create_warmup():
-    return render_template("user/create_warmup.html")
+# @app.route("/rehearsal/create/warm-up", methods=["GET", "POST"])
+# def create_warmup():
+#     form = RehearsalForm()
+#     if request.method == "POST":
+#         req = request.form
+#
+#
+#         # formatted_date = date(rehearsal_date)
+#         # entry = Rehearsal(
+#         #     date=formatted_date
+#         # )
+#         # db.session.add(entry)
+#         # db.session.commit()
+#         return redirect(url_for('rehearsal'))
+#
+#     return render_template("user/create_warmup.html")
 
 
 @app.route("/rehearsal/create/music")
