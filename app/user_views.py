@@ -1,11 +1,11 @@
+from flask_ckeditor import CKEditor
 from flask_login import logout_user, current_user, login_required
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, request, jsonify
 from flask import current_app as app
 from sqlalchemy import insert
-
 from .models import db, Rehearsal
 from .forms import RehearsalForm
-from datetime import datetime, date
+import datetime as dt
 
 
 @app.route('/logout')
@@ -27,7 +27,6 @@ def get_all_rehearsals():
 def create():
     form = RehearsalForm()
     if request.method == "POST":
-        import datetime as dt
 
         req = request.form
         r_date = req.get("date")
@@ -48,7 +47,8 @@ def create():
         db.session.commit()
 
         return redirect(url_for('rehearsal', rehearsal_id=entry_id))
-    return render_template("user/create.html", form=form)
+    return render_template("user/create.html", form=form, current_user=current_user,
+                           logged_in=current_user.is_authenticated)
 
 
 @app.route("/rehearsal/<rehearsal_id>", methods=["GET", "POST"])
@@ -56,24 +56,46 @@ def rehearsal(rehearsal_id):
     if not current_user.is_authenticated:
         flash("You need to login or register to start rehearsing.")
         return redirect(url_for("login"))
-    form = Rehearsal()
-    requested_rehearsal = Rehearsal.query.get(rehearsal_id)
-    if request.method == "POST":
-        # The text box needs to display anything in the database for that lesson
-        # create an edit functionality - Text editor will come up
 
-        return redirect(request.url)
-    return render_template("user/rehearsal.html", rehearsal=requested_rehearsal, form=form, current_user=current_user,
+    requested_rehearsal = Rehearsal.query.get(rehearsal_id)
+    return render_template("user/rehearsal.html", rehearsal=requested_rehearsal, current_user=current_user,
                            logged_in=current_user.is_authenticated)
+
+
+@app.route('/edit_rehearsal/<rehearsal_id>', methods=['GET', 'POST'])
+def edit_rehearsal(rehearsal_id):
+    # Retrieve the text from the database
+    rehearsal_to_edit = Rehearsal.query.get(rehearsal_id)
+    edit_form = RehearsalForm(
+        date=rehearsal_to_edit.date,
+        warm_up=rehearsal_to_edit.warm_up,
+        fundamentals=rehearsal_to_edit.fundamentals,
+        music=rehearsal_to_edit.music,
+    )
+
+    if request.method == "POST":
+        # # Use the datetime module to parse the date string
+        # date_time = dt.datetime.strptime(r_date, '%Y-%m-%d')
+        #
+        # # Convert the datetime object to a date object
+        # date = date_time.date()
+        rehearsal_to_edit.date = edit_form.date.data
+        rehearsal_to_edit.warm_up = edit_form.warm_up.data
+        rehearsal_to_edit.fundamentals = edit_form.fundamentals.data
+        rehearsal_to_edit.music = edit_form.music.data
+        db.session.commit()
+        return redirect(url_for('rehearsal', rehearsal_id=rehearsal_id))
+    return render_template("user/edit_rehearsal.html", rehearsal_id=rehearsal_id, form=edit_form, rehearsal=rehearsal_to_edit)
 
 
 @app.route("/rehearsal/<rehearsal_id>/warm-up", methods=["GET", "POST"])
 def warm_up(rehearsal_id):
-    form = Rehearsal()
+    form = RehearsalForm()
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
-    if request.method == "POST":
+    if form.validate_on_submit():
         return redirect(request.url)
-    return render_template("user/warm_up.html", rehearsal=requested_rehearsal, current_user=current_user,
+    return render_template("user/warm_up.html", form=form, rehearsal=requested_rehearsal,
+                           current_user=current_user,
                            logged_in=current_user.is_authenticated)
 
 

@@ -5,6 +5,7 @@ from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+ckeditor = CKEditor()
 
 
 def create_app():
@@ -17,8 +18,9 @@ def create_app():
         app.config.from_object("config.Config")
 
     db.init_app(app)
-    CKEditor(app)
+    ckeditor.init_app(app)
     Bootstrap(app)
+
     with app.app_context():
         from . import user_views, public_views  # Import routes
         # db.create_all()  # Create sql tables for our data models

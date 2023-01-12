@@ -26,3 +26,4 @@ class RehearsalForm(FlaskForm):
     warm_up = CKEditorField('Warm up Content', validators=[DataRequired()])
     fundamentals = CKEditorField('Fundamentals Content', validators=[DataRequired()])
     music = CKEditorField('Music Content', validators=[DataRequired()])
+    submit = SubmitField("Save")

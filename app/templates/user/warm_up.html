@@ -2,7 +2,7 @@
 
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Rehearsal{% endblock%}
+{% block title %}Warm up{% endblock%}
 
 {% block main%}
 
@@ -16,7 +16,8 @@
                     <a class="nav-link card-nav" href="{{ url_for('rehearsal', rehearsal_id=rehearsal.id) }}">Tuning</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link card-nav active" href="{{ url_for('warm_up', rehearsal_id=rehearsal.id) }}">Warm up</a>
+                    <a class="nav-link card-nav active" href="{{ url_for('warm_up', rehearsal_id=rehearsal.id) }}">Warm
+                        up</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link card-nav" href="{{ url_for('fundamentals', rehearsal_id=rehearsal.id) }}">Fundamentals</a>
@@ -27,26 +28,24 @@
                 <li class="nav-item">
                     <a class="nav-link card-nav" href="{{ url_for('goals', rehearsal_id=rehearsal.id) }}">Goals</a>
                 </li>
-
             </ul>
         </div>
-        <div class="card-body">
-            <h5 class="card-title">Warm up</h5>
-            <div class="card-text">
-                <p>{{rehearsal.warm_up}}</p>
+
+        <div id="view-form">
+            <div class="card-body">
+                <h5 class="card-title">Warm up</h5>
+                <div class="card-text">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>{{rehearsal.warm_up|safe}}</p>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a class="btn btn-outline-warning"
+               href="{{ url_for('edit_rehearsal', rehearsal_id=rehearsal.id) }}">Edit Rehearsal</a>
         </div>
-    </div>
-</div>
+        {% endblock%}
 
-<!--                     -->
-<!--        Metronome             -->
-<!--<div class="metronome ml-auto">-->
 
-<!--    <iframe src="https://guitarapp.com/metronome.html?embed=true&tempo=120&timeSignature=2&pattern=1"-->
-<!--            title="Online Metronome"-->
-<!--            style="width: 360px; height:520px; border-style: none; border-radius: 4px;">-->
-<!--    </iframe>-->
-<!--</div>-->
-{% endblock%}
