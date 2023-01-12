@@ -1,6 +1,5 @@
-from flask_ckeditor import CKEditor
 from flask_login import logout_user, current_user, login_required
-from flask import render_template, url_for, redirect, flash, request, jsonify
+from flask import render_template, url_for, redirect, flash, request
 from flask import current_app as app
 from sqlalchemy import insert
 from .models import db, Rehearsal
