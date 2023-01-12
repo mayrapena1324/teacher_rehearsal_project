@@ -76,9 +76,12 @@ def edit_rehearsal(rehearsal_id):
 
     if request.method == "POST":
         rehearsal_to_edit.date = edit_form.date.data
+        rehearsal_to_edit.group = edit_form.group.data
         rehearsal_to_edit.warm_up = edit_form.warm_up.data
         rehearsal_to_edit.fundamentals = edit_form.fundamentals.data
         rehearsal_to_edit.music = edit_form.music.data
+        rehearsal_to_edit.goals = edit_form.goals.data
+
         db.session.commit()
         return redirect(url_for('rehearsal', rehearsal_id=rehearsal_id))
     return render_template("user/edit_rehearsal.html", rehearsal_id=rehearsal_id, form=edit_form, rehearsal=rehearsal_to_edit)
