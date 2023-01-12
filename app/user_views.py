@@ -83,7 +83,8 @@ def edit_rehearsal(rehearsal_id):
         rehearsal_to_edit.goals = edit_form.goals.data
         db.session.commit()
         return redirect(url_for('rehearsal', rehearsal_id=rehearsal_id))
-    return render_template("user/edit_rehearsal.html", rehearsal_id=rehearsal_id, form=edit_form, rehearsal=rehearsal_to_edit)
+    return render_template("user/edit_rehearsal.html", rehearsal_id=rehearsal_id, form=edit_form, rehearsal=rehearsal_to_edit, current_user=current_user,
+                           logged_in=current_user.is_authenticated)
 
 
 @app.route("/rehearsal/<rehearsal_id>/warm-up", methods=["GET", "POST"])
