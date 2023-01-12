@@ -81,7 +81,6 @@ def edit_rehearsal(rehearsal_id):
         rehearsal_to_edit.fundamentals = edit_form.fundamentals.data
         rehearsal_to_edit.music = edit_form.music.data
         rehearsal_to_edit.goals = edit_form.goals.data
-
         db.session.commit()
         return redirect(url_for('rehearsal', rehearsal_id=rehearsal_id))
     return render_template("user/edit_rehearsal.html", rehearsal_id=rehearsal_id, form=edit_form, rehearsal=rehearsal_to_edit)
@@ -100,7 +99,6 @@ def warm_up(rehearsal_id):
 
 @app.route("/rehearsal/<rehearsal_id>/music", methods=["GET", "POST"])
 def music(rehearsal_id):
-    form = Rehearsal()
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
     if request.method == "POST":
         return redirect(request.url)
@@ -110,7 +108,6 @@ def music(rehearsal_id):
 
 @app.route("/rehearsal/<rehearsal_id>/goals", methods=["GET", "POST"])
 def goals(rehearsal_id):
-    form = Rehearsal()
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
     if request.method == "POST":
         return redirect(request.url)
@@ -120,7 +117,6 @@ def goals(rehearsal_id):
 
 @app.route("/rehearsal/<rehearsal_id>/fundamentals", methods=["GET", "POST"])
 def fundamentals(rehearsal_id):
-    form = Rehearsal()
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
     if request.method == "POST":
         return redirect(request.url)

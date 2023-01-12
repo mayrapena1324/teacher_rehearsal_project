@@ -14,35 +14,39 @@
     </div>
 </div>
 <!--Add a create rehearsal button-->
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col ">
+                        <a href="{{ url_for('create') }}" class="btn btn-outline-dark btn-lg">Create Rehearsal</a>
+                    </div>
+                </div>
+            </div>
 
-<div class="container text-center">
-    <div class="row">
-        <div class="col ">
-            <a href="{{ url_for('create') }}" class="btn btn-outline-dark btn-lg">Create Rehearsal</a>
+            <!--View All rehearsals-->
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        {% for rehearsal in all_rehearsals %}
+                        <div class="rehearsal">
+                            <a href="{{ url_for('rehearsal', rehearsal_id=rehearsal.id) }}">
+                                <h3 class="post-date">
+                                    <div class="container">
+                                        {{rehearsal.group }}: Rehearsal - {{rehearsal.date.strftime("%A %d %B, %Y")}}
+                                        <a href="{{url_for('delete_post', rehearsal_id=rehearsal.id) }}">✘</a>
+                                    </div>
+
+                                </h3>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<!--View All rehearsals-->
-<div class="container">
-    <div class="row">
-        <div class="col">
-            {% for rehearsal in all_rehearsals %}
-            <div class="rehearsal">
-                <a href="{{ url_for('rehearsal', rehearsal_id=rehearsal.id) }}">
-                    <h3 class="post-date">
-                        <div class="container">
-                           {{rehearsal.group }}: Rehearsal - {{rehearsal.date.strftime("%A %d %B, %Y")}}
-                            <a href="{{url_for('delete_post', rehearsal_id=rehearsal.id) }}">✘</a>
-                        </div>
-
-                    </h3>
-                </a>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-
-
-    {% endblock%}
+{% endblock%}
