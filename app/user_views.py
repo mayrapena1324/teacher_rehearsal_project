@@ -30,7 +30,7 @@ def create():
 
         req = request.form
         r_date = req.get("date")
-
+        group = req.get("group")
         # Use the datetime module to parse the date string
         date_time = dt.datetime.strptime(r_date, '%Y-%m-%d')
 
@@ -38,7 +38,7 @@ def create():
         date = date_time.date()
 
         # Insert the row and get the cursor object
-        result = db.session.execute(insert(Rehearsal).values(date=date))
+        result = db.session.execute(insert(Rehearsal).values(date=date, group=group))
 
         # Get the id of the inserted row using the lastrowid attribute
         entry_id = result.lastrowid
@@ -68,17 +68,14 @@ def edit_rehearsal(rehearsal_id):
     rehearsal_to_edit = Rehearsal.query.get(rehearsal_id)
     edit_form = RehearsalForm(
         date=rehearsal_to_edit.date,
+        group=rehearsal_to_edit.group,
         warm_up=rehearsal_to_edit.warm_up,
         fundamentals=rehearsal_to_edit.fundamentals,
         music=rehearsal_to_edit.music,
+        goals=rehearsal_to_edit.goals,
     )
 
     if request.method == "POST":
-        # # Use the datetime module to parse the date string
-        # date_time = dt.datetime.strptime(r_date, '%Y-%m-%d')
-        #
-        # # Convert the datetime object to a date object
-        # date = date_time.date()
         rehearsal_to_edit.date = edit_form.date.data
         rehearsal_to_edit.warm_up = edit_form.warm_up.data
         rehearsal_to_edit.fundamentals = edit_form.fundamentals.data

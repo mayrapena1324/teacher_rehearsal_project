@@ -23,7 +23,9 @@ class LoginForm(FlaskForm):
 # Rehearsal Form
 class RehearsalForm(FlaskForm):
     date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
-    warm_up = CKEditorField('Warm up Content', validators=[DataRequired()])
-    fundamentals = CKEditorField('Fundamentals Content', validators=[DataRequired()])
-    music = CKEditorField('Music Content', validators=[DataRequired()])
+    group = StringField('Group', validators=[DataRequired()])
+    warm_up = CKEditorField('Warm up', validators=[DataRequired()])
+    fundamentals = CKEditorField('Fundamentals', validators=[DataRequired()])
+    music = CKEditorField('Music', validators=[DataRequired()])
+    goals = CKEditorField('Goals', validators=[DataRequired()])
     submit = SubmitField("Save")
