@@ -26,7 +26,6 @@ def get_all_rehearsals():
 def create():
     form = RehearsalForm()
     if request.method == "POST":
-
         req = request.form
         r_date = req.get("date")
         group = req.get("group")
@@ -63,7 +62,6 @@ def rehearsal(rehearsal_id):
 
 @app.route('/edit_rehearsal/<rehearsal_id>', methods=['GET', 'POST'])
 def edit_rehearsal(rehearsal_id):
-    # Retrieve the text from the database
     rehearsal_to_edit = Rehearsal.query.get(rehearsal_id)
     edit_form = RehearsalForm(
         date=rehearsal_to_edit.date,
@@ -73,6 +71,10 @@ def edit_rehearsal(rehearsal_id):
         music=rehearsal_to_edit.music,
         goals=rehearsal_to_edit.goals,
     )
+    if request.method == 'POST':
+        if edit_form.cancel.data:  # if cancel button is clicked, the form.cancel.data will be True
+            return redirect(url_for('rehearsal', rehearsal_id=rehearsal_id))
+    # Retrieve the text from the database
 
     if request.method == "POST":
         rehearsal_to_edit.date = edit_form.date.data
@@ -83,7 +85,8 @@ def edit_rehearsal(rehearsal_id):
         rehearsal_to_edit.goals = edit_form.goals.data
         db.session.commit()
         return redirect(url_for('rehearsal', rehearsal_id=rehearsal_id))
-    return render_template("user/edit_rehearsal.html", rehearsal_id=rehearsal_id, form=edit_form, rehearsal=rehearsal_to_edit, current_user=current_user,
+    return render_template("user/edit_rehearsal.html", rehearsal_id=rehearsal_id, form=edit_form,
+                           rehearsal=rehearsal_to_edit, current_user=current_user,
                            logged_in=current_user.is_authenticated)
 
 

@@ -36,7 +36,11 @@
                 <div class="card-text">
                     <div class="card">
                         <div class="card-body">
+                            {% if rehearsal.goals|safe == 'None' %}
+                            <h4>Click 'Edit Rehearsal' to start enjoying Rehearsify 🥳</h4>
+                            {% else %}
                             <p>{{rehearsal.goals|safe}}</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

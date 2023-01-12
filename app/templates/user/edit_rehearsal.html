@@ -13,7 +13,7 @@
                     <div class="col-lg-8 col-md-10 mx-auto">
                         {{ ckeditor.load() }}
                         {{ ckeditor.config(name='body') }}
-                        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+                        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "outline-dark", "cancel": "outline-danger"}) }}
                     </div>
                 </div>
             </div>
