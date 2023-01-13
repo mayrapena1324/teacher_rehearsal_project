@@ -1,8 +1,8 @@
 from flask_login import logout_user, current_user, login_required
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, request, abort
 from flask import current_app as app
 from sqlalchemy import insert
-from .models import db, Rehearsal
+from .models import db, Rehearsal, User
 from .forms import RehearsalForm
 import datetime as dt
 
@@ -16,7 +16,7 @@ def logout():
 @app.route("/all-rehearsals")
 @login_required
 def get_all_rehearsals():
-    rehearsals = Rehearsal.query.all()
+    rehearsals = Rehearsal.query.filter_by(user_id=current_user.id)
     return render_template('user/all_rehearsals.html', all_rehearsals=rehearsals, current_user=current_user,
                            logged_in=current_user.is_authenticated)
 
@@ -26,6 +26,7 @@ def get_all_rehearsals():
 def create():
     form = RehearsalForm()
     if request.method == "POST":
+        user = User.query.filter_by(id=current_user.id).first()
         req = request.form
         r_date = req.get("date")
         group = req.get("group")
@@ -36,7 +37,7 @@ def create():
         date = date_time.date()
 
         # Insert the row and get the cursor object
-        result = db.session.execute(insert(Rehearsal).values(date=date, group=group))
+        result = db.session.execute(insert(Rehearsal).values(user_id=user.id, date=date, group=group))
 
         # Get the id of the inserted row using the lastrowid attribute
         entry_id = result.lastrowid
@@ -56,6 +57,8 @@ def rehearsal(rehearsal_id):
         return redirect(url_for("login"))
 
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
+    if requested_rehearsal.user_id != current_user.id:
+        return abort(403)
     return render_template("user/rehearsal.html", rehearsal=requested_rehearsal, current_user=current_user,
                            logged_in=current_user.is_authenticated)
 
@@ -63,6 +66,8 @@ def rehearsal(rehearsal_id):
 @app.route('/edit_rehearsal/<rehearsal_id>', methods=['GET', 'POST'])
 def edit_rehearsal(rehearsal_id):
     rehearsal_to_edit = Rehearsal.query.get(rehearsal_id)
+    if rehearsal_to_edit.user_id != current_user.id:
+        return abort(403)
     edit_form = RehearsalForm(
         date=rehearsal_to_edit.date,
         group=rehearsal_to_edit.group,
@@ -94,6 +99,8 @@ def edit_rehearsal(rehearsal_id):
 def warm_up(rehearsal_id):
     form = RehearsalForm()
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
+    if requested_rehearsal.user_id != current_user.id:
+        return abort(403)
     if form.validate_on_submit():
         return redirect(request.url)
     return render_template("user/warm_up.html", form=form, rehearsal=requested_rehearsal,
@@ -104,6 +111,8 @@ def warm_up(rehearsal_id):
 @app.route("/rehearsal/<rehearsal_id>/music", methods=["GET", "POST"])
 def music(rehearsal_id):
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
+    if requested_rehearsal.user_id != current_user.id:
+        return abort(403)
     if request.method == "POST":
         return redirect(request.url)
     return render_template("user/music.html", rehearsal=requested_rehearsal, current_user=current_user,
@@ -113,6 +122,8 @@ def music(rehearsal_id):
 @app.route("/rehearsal/<rehearsal_id>/goals", methods=["GET", "POST"])
 def goals(rehearsal_id):
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
+    if requested_rehearsal.user_id != current_user.id:
+        return abort(403)
     if request.method == "POST":
         return redirect(request.url)
     return render_template("user/goals.html", rehearsal=requested_rehearsal, current_user=current_user,
@@ -122,6 +133,8 @@ def goals(rehearsal_id):
 @app.route("/rehearsal/<rehearsal_id>/fundamentals", methods=["GET", "POST"])
 def fundamentals(rehearsal_id):
     requested_rehearsal = Rehearsal.query.get(rehearsal_id)
+    if requested_rehearsal.user_id != current_user.id:
+        return abort(403)
     if request.method == "POST":
         return redirect(request.url)
     return render_template("user/fundamentals.html", rehearsal=requested_rehearsal, current_user=current_user,
@@ -130,7 +143,9 @@ def fundamentals(rehearsal_id):
 
 @app.route("/delete/<int:rehearsal_id>")
 def delete_post(rehearsal_id):
-    post_to_delete = Rehearsal.query.get(rehearsal_id)
-    db.session.delete(post_to_delete)
+    rehearsal_to_delete = Rehearsal.query.get(rehearsal_id)
+    if rehearsal_to_delete.user_id != current_user.id:
+        return abort(403)
+    db.session.delete(rehearsal_to_delete)
     db.session.commit()
     return redirect(url_for('get_all_rehearsals'))
