@@ -1,0 +1,61 @@
+{% extends "user/templates/rehearsal_template.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Rehearsal - Goals{% endblock%}
+
+{% block main%}
+
+<!---->
+<!--Card for rehearsal -->
+<div class="container">
+    <div class="card shadow p-3 mb-5 bg-white rounded text-center">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link card-nav" href="{{ url_for('rehearsal', rehearsal_id=rehearsal.id) }}">Tuning</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link card-nav" href="{{ url_for('warm_up', rehearsal_id=rehearsal.id) }}">Warm up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link card-nav" href="{{ url_for('fundamentals', rehearsal_id=rehearsal.id) }}">Fundamentals</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link card-nav" href="{{ url_for('music', rehearsal_id=rehearsal.id) }}">Music</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link card-nav active"
+                       href="{{ url_for('goals', rehearsal_id=rehearsal.id) }}">Goals</a>
+                </li>
+            </ul>
+        </div>
+        <div id="view-form">
+            <div class="card-body">
+                <h5 class="card-title">Goals</h5>
+                <div class="card-text">
+                    <div class="card">
+                        <div class="card-body">
+                            {% if rehearsal.goals|safe == 'None' %}
+                            <h4>Click 'Edit Rehearsal' to start enjoying Rehearsify 🥳</h4>
+                            {% else %}
+                            <p>{{rehearsal.goals|safe}}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-outline-warning"
+               href="{{ url_for('edit_rehearsal', rehearsal_id=rehearsal.id) }}">Edit Rehearsal</a>
+        </div>
+
+        <!--                     -->
+        <!--        Metronome             -->
+        <!--<div class="metronome ml-auto">-->
+
+        <!--    <iframe src="https://guitarapp.com/metronome.html?embed=true&tempo=120&timeSignature=2&pattern=1"-->
+        <!--            title="Online Metronome"-->
+        <!--            style="width: 360px; height:520px; border-style: none; border-radius: 4px;">-->
+        <!--    </iframe>-->
+        <!--</div>-->
+        {% endblock%}

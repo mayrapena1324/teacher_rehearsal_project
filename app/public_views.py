@@ -18,7 +18,6 @@ def register():
             form.password.data,
             method='pbkdf2:sha256',
             salt_length=8)
-
         new_user = User(
             email=form.email.data,
             password=secured_password,
@@ -53,16 +52,16 @@ def login():
         # Email exists and password correct
         else:
             login_user(user)
-            return redirect(url_for('index'))
+            return redirect(url_for('get_all_rehearsals'))
     return render_template("public/login.html", form=form, current_user=current_user, logged_in=current_user.is_authenticated)
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # print(app.config["DEBUG"])
+
     return render_template("public/index.html",  current_user=current_user, logged_in=current_user.is_authenticated)
 
 
 @app.route("/faq", methods=["GET", "POST"])
 def faq():
-    return render_template("public/faq.html")
+    return render_template("public/faq.html", current_user=current_user, logged_in=current_user.is_authenticated)

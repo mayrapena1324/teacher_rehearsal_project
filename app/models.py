@@ -19,10 +19,12 @@ class User(UserMixin, db.Model):
 class Rehearsal(db.Model):
     __tablename__ = "rehearsals"
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, unique=True, nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    group = db.Column(db.String(250), nullable=False)
     warm_up = db.Column(db.Text, nullable=True)
     fundamentals = db.Column(db.Text, nullable=True)
     music = db.Column(db.Text, nullable=True)
+    goals = db.Column(db.Text, nullable=True)
 
 
 # CONFIGURE FLASK_LOGIN
