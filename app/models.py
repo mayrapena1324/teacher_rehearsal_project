@@ -27,7 +27,6 @@ class Rehearsal(db.Model):
     goals = db.Column(db.Text, nullable=True)
 
 
-
 # CONFIGURE FLASK_LOGIN
 login_manager = LoginManager()
 login_manager.init_app(app)
