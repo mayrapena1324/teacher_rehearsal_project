@@ -17,7 +17,7 @@
             <p class="card-text">Get ready to have an amazing rehearsal and see results</p>
 
             <a
-                    {% if not logged_in: %}
+                    {% if not logged_in %}
                     href="{{ url_for('login') }}"
                     {% else %}
                     href="{{ url_for('get_all_rehearsals') }}"
