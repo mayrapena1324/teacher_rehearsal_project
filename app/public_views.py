@@ -18,7 +18,6 @@ def register():
             form.password.data,
             method='pbkdf2:sha256',
             salt_length=8)
-
         new_user = User(
             email=form.email.data,
             password=secured_password,

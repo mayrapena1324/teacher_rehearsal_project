@@ -29,4 +29,4 @@ class RehearsalForm(FlaskForm):
     music = CKEditorField('Music', validators=[DataRequired()])
     goals = CKEditorField('Goals', validators=[DataRequired()])
     submit = SubmitField("Save")
-    cancel = SubmitField("Cencel")
+    cancel = SubmitField("Cancel")
