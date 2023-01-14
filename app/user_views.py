@@ -7,12 +7,6 @@ from .forms import RehearsalForm
 import datetime as dt
 
 
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
-
-
 @app.route("/all-rehearsals")
 @login_required
 def get_all_rehearsals():

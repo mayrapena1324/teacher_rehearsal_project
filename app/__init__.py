@@ -22,7 +22,7 @@ def create_app():
     Bootstrap(app)
 
     with app.app_context():
-        from . import user_views, public_views, error_handlers  # Import routes
+        from . import user_views, public_views, error_handlers, auth  # Import routes
         db.create_all()  # Create sql tables for our data models
 
         return app
