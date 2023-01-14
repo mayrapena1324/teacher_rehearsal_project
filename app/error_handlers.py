@@ -14,8 +14,6 @@ def not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     app.logger.error(f"Server Error{e}, route: {request.url}")  # pass in the error itself and the error
-
-    # email_admin(message="Server error", error=e, url=request.url)
     return render_template("public/error_handlers/500.html")
 
 
