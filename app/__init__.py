@@ -3,6 +3,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
+from os import path
 
 db = SQLAlchemy()
 ckeditor = CKEditor()
@@ -22,8 +23,13 @@ def create_app():
     Bootstrap(app)
 
     with app.app_context():
-        from . import user_views, public_views, error_handlers, auth  # Import routes
-        db.create_all()  # Create sql tables for our data models
-
+        from . import user_views, public_views, error_handlers, auth, models  # Import routes
+        create_database()
         return app
 
+
+# create the database
+def create_database():
+    if not path.exists("teacher_rehearsal_project/instance/rehearsify.db"):
+        db.create_all()  # Create sql tables for our data models
+        print("Created Database!")

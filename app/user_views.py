@@ -1,4 +1,4 @@
-from flask_login import logout_user, current_user, login_required
+from flask_login import current_user, login_required
 from flask import render_template, url_for, redirect, flash, request, abort
 from flask import current_app as app
 from sqlalchemy import insert
@@ -10,9 +10,11 @@ import datetime as dt
 @app.route("/all-rehearsals")
 @login_required
 def get_all_rehearsals():
-    rehearsals = Rehearsal.query.filter_by(user_id=current_user.id)
+    rehearsals = Rehearsal.query.filter_by(user_id=current_user.id)  # only query for current user
+    distinct_groups = db.session.query(Rehearsal.group).filter_by(user_id=current_user.id).distinct().all()
+
     return render_template('user/all_rehearsals.html', all_rehearsals=rehearsals, current_user=current_user,
-                           logged_in=current_user.is_authenticated)
+                           logged_in=current_user.is_authenticated, distinct_groups=distinct_groups)
 
 
 @app.route("/rehearsal/create", methods=["GET", "POST"])
@@ -83,7 +85,7 @@ def edit_rehearsal(rehearsal_id):
         rehearsal_to_edit.music = edit_form.music.data
         rehearsal_to_edit.goals = edit_form.goals.data
         db.session.commit()
-        return redirect(url_for('rehearsal', rehearsal_id=rehearsal_id))
+        return redirect(url_for('warm_up', rehearsal_id=rehearsal_id))
     return render_template("user/edit_rehearsal.html", rehearsal_id=rehearsal_id, form=edit_form,
                            rehearsal=rehearsal_to_edit, current_user=current_user,
                            logged_in=current_user.is_authenticated)

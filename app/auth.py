@@ -1,5 +1,5 @@
 from flask import current_app as app, flash, redirect, url_for, render_template
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 from app.forms import RegisterForm, LoginForm
@@ -57,6 +57,7 @@ def login():
 
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
