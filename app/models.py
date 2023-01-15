@@ -31,7 +31,7 @@ class Rehearsal(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
-# CONFIGURE FLASK_LOGIN MOVE TO INIT.PY later
+# CONFIGURE FLASK_LOGIN MOVE T
 login_manager = LoginManager()
 login_manager.init_app(app)
 

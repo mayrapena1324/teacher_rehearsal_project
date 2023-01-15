@@ -10,7 +10,23 @@ import datetime as dt
 @app.route("/all-rehearsals")
 @login_required
 def get_all_rehearsals():
-    rehearsals = Rehearsal.query.filter_by(user_id=current_user.id)  # only query for current user
+    order_by = request.args.get("order_by")
+    if not order_by:
+        # Handle the case when the user does not select any option
+        # redirect the user to a default ordering
+        return redirect(url_for("get_all_rehearsals", order_by="desc"))
+    elif order_by not in ["asc", "desc"]:
+        # Handle the case when the user is trying to manipulate the order_by parameter
+        # return an error message
+        flash("Invalid value for the order_by parameter")
+        return redirect(url_for("get_all_rehearsals", order_by="desc"))
+    else:
+        if order_by == "desc":
+            order_by_clause = Rehearsal.date.desc()
+        else:
+            order_by_clause = Rehearsal.date.asc()
+        rehearsals = Rehearsal.query.filter_by(user_id=current_user.id).order_by(order_by_clause)
+    # filter by distinct
     distinct_groups = db.session.query(Rehearsal.group).filter_by(user_id=current_user.id).distinct().all()
 
     return render_template('user/all_rehearsals.html', all_rehearsals=rehearsals, current_user=current_user,
