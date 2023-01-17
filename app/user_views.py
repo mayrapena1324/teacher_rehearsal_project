@@ -153,8 +153,8 @@ def fundamentals(rehearsal_id):
                            logged_in=current_user.is_authenticated)
 
 
-@app.route("/delete/<int:rehearsal_id>")
-def delete_post(rehearsal_id):
+@app.route("/delete/<int:rehearsal_id>", methods=["GET", "POST"])
+def delete_rehearsal(rehearsal_id):
     rehearsal_to_delete = Rehearsal.query.get(rehearsal_id)
     if rehearsal_to_delete.user_id != current_user.id:
         return abort(403)

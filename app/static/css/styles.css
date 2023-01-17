@@ -36,3 +36,7 @@ h1{
 .rehearsal-link {
     text-decoration: none;
 }
+
+.list-group-item {
+padding-top: 0;
+}

@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Email
 
 # Registration Form
 class RegisterForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email(message="Please enter a valid email.")])
+    email = StringField('Email', validators=[DataRequired(), Email(message="Please enter valid email.")])
     password = PasswordField('Password', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
@@ -30,3 +30,4 @@ class RehearsalForm(FlaskForm):
     goals = CKEditorField('Goals', validators=[DataRequired()])
     submit = SubmitField("Save")
     cancel = SubmitField("Cancel")
+
