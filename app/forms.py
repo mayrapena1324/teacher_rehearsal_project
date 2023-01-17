@@ -33,5 +33,5 @@ class RehearsalForm(FlaskForm):
 
 
 class OrderForm(FlaskForm):
-    order_by = SelectField('Order by', choices=[('desc', 'Most recent first'), ('asc', 'Oldest first'), ('created', 'Order Created')])
+    order_by = SelectField('Order by', choices=[('desc', 'Most Recent First'), ('asc', 'Oldest First'), ('created', 'Order Created')])
 
