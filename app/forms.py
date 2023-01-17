@@ -24,10 +24,10 @@ class LoginForm(FlaskForm):
 class RehearsalForm(FlaskForm):
     date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
     group = StringField('Group', validators=[DataRequired()])
-    warm_up = CKEditorField('Warmup', validators=[DataRequired()])
-    fundamentals = CKEditorField('Fundamentals', validators=[DataRequired()])
-    music = CKEditorField('Music', validators=[DataRequired()])
-    goals = CKEditorField('Goals', validators=[DataRequired()])
+    warm_up = CKEditorField('Warmup')
+    fundamentals = CKEditorField('Fundamentals')
+    music = CKEditorField('Music')
+    goals = CKEditorField('Goals')
     submit = SubmitField("Save")
     cancel = SubmitField("Cancel")
 

@@ -41,19 +41,14 @@ def get_all_rehearsals():
 @login_required
 def create():
     form = RehearsalForm()
-    if request.method == "POST":
+    if form.validate_on_submit():
+        print("Valid")
         user = User.query.filter_by(id=current_user.id).first()
-        req = request.form
-        r_date = req.get("date")
-        group = req.get("group")
-        # Use the datetime module to parse the date string
-        date_time = dt.datetime.strptime(r_date, '%Y-%m-%d')
-
-        # Convert the datetime object to a date object
-        date = date_time.date()
+        r_date = form.date.data
+        group = form.group.data
 
         # Insert the row and get the cursor object
-        result = db.session.execute(insert(Rehearsal).values(user_id=user.id, date=date, group=group))
+        result = db.session.execute(insert(Rehearsal).values(user_id=user.id, date=r_date, group=group))
 
         # Get the id of the inserted row using the lastrowid attribute
         entry_id = result.lastrowid
