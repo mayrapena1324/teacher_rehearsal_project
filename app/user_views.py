@@ -7,9 +7,19 @@ from .forms import RehearsalForm, OrderForm
 import datetime as dt
 
 
+# Check if date has expired
+def has_expired(date):
+    import datetime
+
+    return date < datetime.datetime.now()
+
+
 @app.route("/all-rehearsals", methods=["GET", "POST"])
 @login_required
 def get_all_rehearsals():
+    date_check = dt.datetime.today().date()
+    today = date_check.strftime("%a %d %b, %Y")
+
     form = OrderForm()
     order_by = request.args.get("order_by")
     if not order_by:
@@ -30,11 +40,13 @@ def get_all_rehearsals():
         else:
             order_by_clause = Rehearsal.date.asc()
         rehearsals = Rehearsal.query.filter_by(user_id=current_user.id).order_by(order_by_clause)
+
     # filter by distinct
     distinct_groups = db.session.query(Rehearsal.group).filter_by(user_id=current_user.id).distinct().all()
+
     return render_template('user/all_rehearsals.html', all_rehearsals=rehearsals, current_user=current_user,
                            logged_in=current_user.is_authenticated, distinct_groups=distinct_groups, form=form,
-                           order_by=order_by)
+                           order_by=order_by, today=today, date_check=date_check)
 
 
 @app.route("/rehearsal/create", methods=["GET", "POST"])

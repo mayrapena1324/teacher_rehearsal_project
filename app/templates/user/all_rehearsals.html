@@ -13,6 +13,7 @@
     <div class="row">
         <div class="col">
             <h1>Your Rehearsals 🎻</h1>
+            <h2>Today is {{today}}</h2>
         </div>
     </div>
 </div>
@@ -36,8 +37,16 @@
                 <div class="card-body rehearsal-cards">
                     <ul class="list-group list-group-flush">
                         {% for rehearsal in all_rehearsals if group[0] == rehearsal.group %}
-
+                        <p>
+                            {% if date_check <= rehearsal.date %}
+                            UPCOMING
+                            {% else %}
+                            PAST
+                            {% endif %}
+                        </p>
                         <li class="d-flex align-items-center list-group-item">
+
+
                             <a class="rehearsal-link" href="{{ url_for('rehearsal', rehearsal_id=rehearsal.id) }}">
                                 <h5 class="rehearsal-date">
                                     {{rehearsal.date.strftime("%a %d %b, %Y")}}
