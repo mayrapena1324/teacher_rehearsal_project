@@ -1,5 +1,5 @@
 body{
-   background-image: linear-gradient(to left, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+   background-color: #84D2C5
 }
 h1{
     font-family: 'Passion One', cursive;
@@ -40,3 +40,18 @@ h1{
 .list-group-item {
 padding-top: 0;
 }
+
+.create-rehearsal {
+margin: 3rem;
+}
+
+.sort-form {
+    margin: 2rem;
+}
+
+.create-rehearsal-card {
+    width: 50%;
+    margin: 3rem, 3rem;
+}
+
+
