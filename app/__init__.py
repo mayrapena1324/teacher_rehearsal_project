@@ -4,7 +4,9 @@ from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from os import path
+from flask_wtf.csrf import CSRFProtect
 
+csrf = CSRFProtect()
 db = SQLAlchemy()
 ckeditor = CKEditor()
 
@@ -21,6 +23,7 @@ def create_app():
     db.init_app(app)
     ckeditor.init_app(app)
     Bootstrap(app)
+    csrf.init_app(app)
 
     with app.app_context():
         from . import user_views, public_views, error_handlers, auth, models  # Import routes

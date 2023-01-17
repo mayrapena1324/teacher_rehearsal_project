@@ -42,9 +42,9 @@ def get_all_rehearsals():
 def create():
     form = RehearsalForm()
     if form.validate_on_submit():
-        print("Valid")
         user = User.query.filter_by(id=current_user.id).first()
         r_date = form.date.data
+
         group = form.group.data
 
         # Insert the row and get the cursor object

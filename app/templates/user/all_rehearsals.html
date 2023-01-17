@@ -73,6 +73,7 @@
 
                                         <form action="{{url_for('delete_rehearsal', rehearsal_id=rehearsal.id)}}"
                                               method="post">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                             <input type="submit" value="Delete" class="btn btn-outline-danger">
                                         </form>
                                     </div>
@@ -91,16 +92,16 @@
 </div>
 
 <div class="container sort-form">
-<form action="{{url_for('get_all_rehearsals')}}" method="get">
-    <label class="select-order-label" for="order_by">Order by:</label>
-    <select  name="order_by" id="order_by" onchange="this.form.submit()" class="form-control">
-        <option value="asc" {% if order_by=="asc" %}selected{% endif %}>Oldest first</option>
-        <option value="desc" {% if order_by=="desc" %}selected{% endif %}>Most recent first</option>
-        <option value="created" {% if order_by=="created" %}selected{% endif %}>Order Created</option>
-    </select>
-</form>
+    <form action="{{url_for('get_all_rehearsals')}}" method="get">
+        {{ form.csrf_token }}
+        <label class="select-order-label" for="order_by">Order by:</label>
+        <select name="order_by" id="order_by" onchange="this.form.submit()" class="form-control">
+            <option value="asc" {% if order_by=="asc" %}selected{% endif %}>Oldest first</option>
+            <option value="desc" {% if order_by=="desc" %}selected{% endif %}>Most recent first</option>
+            <option value="created" {% if order_by=="created" %}selected{% endif %}>Order Created</option>
+        </select>
+    </form>
 </div>
-
 
 
 {% endblock%}
