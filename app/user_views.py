@@ -3,34 +3,38 @@ from flask import render_template, url_for, redirect, flash, request, abort
 from flask import current_app as app
 from sqlalchemy import insert
 from .models import db, Rehearsal, User
-from .forms import RehearsalForm
+from .forms import RehearsalForm, OrderForm
 import datetime as dt
 
 
-@app.route("/all-rehearsals")
+@app.route("/all-rehearsals", methods=["GET", "POST"])
 @login_required
 def get_all_rehearsals():
+    form = OrderForm()
     order_by = request.args.get("order_by")
     if not order_by:
         # Handle the case when the user does not select any option
         # redirect the user to a default ordering
         return redirect(url_for("get_all_rehearsals", order_by="desc"))
-    elif order_by not in ["asc", "desc"]:
+    elif order_by not in ["asc", "desc", "created"]:
         # Handle the case when the user is trying to manipulate the order_by parameter
         # return an error message
         flash("Invalid value for the order_by parameter")
         return redirect(url_for("get_all_rehearsals", order_by="desc"))
     else:
+
         if order_by == "desc":
             order_by_clause = Rehearsal.date.desc()
+        elif order_by == "created":
+            order_by_clause = Rehearsal.user_id.asc()
         else:
             order_by_clause = Rehearsal.date.asc()
         rehearsals = Rehearsal.query.filter_by(user_id=current_user.id).order_by(order_by_clause)
     # filter by distinct
     distinct_groups = db.session.query(Rehearsal.group).filter_by(user_id=current_user.id).distinct().all()
-
     return render_template('user/all_rehearsals.html', all_rehearsals=rehearsals, current_user=current_user,
-                           logged_in=current_user.is_authenticated, distinct_groups=distinct_groups)
+                           logged_in=current_user.is_authenticated, distinct_groups=distinct_groups, form=form,
+                           order_by=order_by)
 
 
 @app.route("/rehearsal/create", methods=["GET", "POST"])

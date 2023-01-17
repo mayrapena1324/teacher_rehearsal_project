@@ -46,9 +46,12 @@ margin: 3rem;
 }
 
 .sort-form {
+    width:  25%;
     margin: 2rem;
 }
-
+.select-order-label{
+    padding: 1.5rem;
+}
 .create-rehearsal-card {
     width: 50%;
     margin: 3rem, 3rem;

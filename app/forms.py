@@ -1,6 +1,6 @@
 from flask_ckeditor import CKEditorField
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, DateField
+from wtforms import StringField, SubmitField, PasswordField, DateField, SelectField
 from wtforms.validators import DataRequired, Email
 
 
@@ -30,4 +30,8 @@ class RehearsalForm(FlaskForm):
     goals = CKEditorField('Goals', validators=[DataRequired()])
     submit = SubmitField("Save")
     cancel = SubmitField("Cancel")
+
+
+class OrderForm(FlaskForm):
+    order_by = SelectField('Order by', choices=[('desc', 'Most recent first'), ('asc', 'Oldest first'), ('created', 'Order Created')])
 
