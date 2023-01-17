@@ -63,3 +63,7 @@ margin: 3rem;
     max-height: 400px;
     overflow-y: scroll;
 }
+
+.expired-check{
+    font-weight: bold;
+}
