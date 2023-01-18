@@ -7,16 +7,10 @@ from .forms import RehearsalForm, OrderForm
 import datetime as dt
 
 
-# Check if date has expired
-def has_expired(date):
-    import datetime
-
-    return date < datetime.datetime.now()
-
-
 @app.route("/all-rehearsals", methods=["GET", "POST"])
 @login_required
 def get_all_rehearsals():
+    # Check date
     date_check = dt.datetime.today().date()
     today = date_check.strftime("%a %d %b, %Y")
 
