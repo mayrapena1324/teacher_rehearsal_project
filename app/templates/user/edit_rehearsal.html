@@ -12,8 +12,8 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
                         {{ ckeditor.load() }}
-                        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "outline-dark", "cancel": "outline-danger"}) }}
-
+                        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "outline-dark", "cancel":
+                        "outline-danger"}) }}
                     </div>
                 </div>
             </div>
@@ -21,8 +21,4 @@
     </div>
 </div>
 {% endblock%}
-
-<script src="{{ url_for('static', filename='tinymce/tinymce.min.js') }}"></script>
-<script src="{{ url_for('static', filename='tinymce/flask_tinymce.js') }}"></script>
-<textarea class="tinymce"></textarea>
 
