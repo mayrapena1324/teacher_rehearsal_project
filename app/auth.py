@@ -43,11 +43,11 @@ def login():
         user = User.query.filter_by(email=email).first()
         # Email doesn't exist
         if not user:
-            flash("That email does not exist, please try again.")
+            flash("Email and/or Password do not match, please try again.")
             return redirect(url_for('login'))
         # Password incorrect
         elif not check_password_hash(user.password, password):
-            flash('Password incorrect, please try again.')
+            flash('Email and/or Password do not match, please try again.')
             return redirect(url_for('login'))
         # Email exists and password correct
         else:
