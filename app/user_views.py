@@ -1,10 +1,52 @@
+import weasyprint
 from flask_login import current_user, login_required
-from flask import render_template, url_for, redirect, flash, request, abort
+from flask import render_template, url_for, redirect, flash, request, abort, make_response, send_file
 from flask import current_app as app
 from sqlalchemy import insert
 from .models import db, Rehearsal, User
 from .forms import RehearsalForm, OrderForm
 import datetime as dt
+
+
+@app.route("/download-group-rehearsals/<group>")
+def download_group_rehearsals(group):
+    # query the rehearsals for the given group and user
+    rehearsals = Rehearsal.query.filter_by(user_id=current_user.id, group=group).all()
+    # FIX THIS TOMORROW TO ENSURE THEY CANT DOWNLOAD OTHERS LESSONS
+    # iterate over the rehearsals and create a pdf for each one
+    for rehearsal in rehearsals:
+        # use Jinja2 to render the HTML template for the pdf
+        html_string = render_template('pdf/rehearsal.html', rehearsal=rehearsal)
+
+        # use WeasyPrint to convert the HTML to a pdf
+        pdf_file = weasyprint.HTML(string=html_string).write_pdf()
+
+        # create a unique filename for the pdf and save it to the server
+        filename = f'{rehearsal.id}.pdf'
+        with open(filename, 'wb') as f:
+            f.write(pdf_file)
+
+    # return the filenames of the generated pdfs
+    return [f'{rehearsal.id}.pdf' for rehearsal in rehearsals]
+
+
+@app.route("/generate-rehearsal/<int:rehearsal_id>")
+def generate_rehearsal(rehearsal_id):
+    # Get the rehearsal from the database
+    rehearsal = Rehearsal.query.get(rehearsal_id)
+
+    # Render the template to get the HTML content
+    html_content = render_template("user/pdf/rehearsal_pdf.html", rehearsal=rehearsal)
+
+    # Create the PDF
+    pdf_content = weasyprint.HTML(string=html_content).write_pdf()
+
+    # Create the response object with the PDF content
+    response = make_response(pdf_content)
+    response.headers["Content-Type"] = "application/pdf"
+    response.headers["Content-Disposition"] = f"attachment; filename={rehearsal.group}-rehearsal-{rehearsal.date}.pdf"
+
+    return response
 
 
 @app.route("/all-rehearsals", methods=["GET", "POST"])

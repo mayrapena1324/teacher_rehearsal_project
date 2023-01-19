@@ -67,22 +67,26 @@
         </div>
     </div>
 </div>
-
+<!-- Download rehearsal-->
+<div class="container">
+    <a class="btn btn-outline-primary" href="{{url_for('generate_rehearsal', rehearsal_id=rehearsal.id)}}">Download PDF</a>
+</div>
 
 <main>
     {% block main %} {% endblock %}
 </main>
 
- <!--        Metronome             -->
-    <div class="container text-center">
-        <div class="metronome ml-auto">
 
-            <iframe src="https://guitarapp.com/metronome.html?embed=true&tempo=120&timeSignature=2&pattern=1"
-                    title="Online Metronome"
-                    style="width: 360px; height:520px; border-style: none; border-radius: 4px;">
-            </iframe>
-        </div>
+<!--        Metronome             -->
+<div class="container text-center">
+    <div class="metronome ml-auto">
+
+        <iframe src="https://guitarapp.com/metronome.html?embed=true&tempo=120&timeSignature=2&pattern=1"
+                title="Online Metronome"
+                style="width: 360px; height:520px; border-style: none; border-radius: 4px;">
+        </iframe>
     </div>
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
