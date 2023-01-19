@@ -31,7 +31,13 @@ def get_all_rehearsals():
             order_by_clause = Rehearsal.date.desc()
         else:
             order_by_clause = Rehearsal.date.asc()
-        rehearsals = Rehearsal.query.filter_by(user_id=current_user.id).order_by(order_by_clause)
+        rehearsals = Rehearsal.query.filter_by(user_id=current_user.id)
+        if order_by == "desc":
+            rehearsals = rehearsals.order_by(Rehearsal.date.desc())
+        elif order_by == "created":
+            rehearsals = rehearsals.order_by(Rehearsal.user_id.asc())
+        else:
+            rehearsals = rehearsals.order_by(Rehearsal.date.asc())
 
     # filter by distinct
     distinct_groups = db.session.query(Rehearsal.group).filter_by(user_id=current_user.id).distinct().all()
