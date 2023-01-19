@@ -5,6 +5,7 @@ from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_wtf.csrf import CSRFProtect
+from wtf_tinymce import wtf_tinymce
 
 csrf = CSRFProtect()
 db = SQLAlchemy()
@@ -24,6 +25,7 @@ def create_app():
     ckeditor.init_app(app)
     Bootstrap(app)
     csrf.init_app(app)
+    wtf_tinymce.init_app(app)
 
     with app.app_context():
         from . import user_views, public_views, error_handlers, auth, models  # Import routes
