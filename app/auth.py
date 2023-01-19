@@ -12,7 +12,7 @@ def register():
     if form.validate_on_submit():
         if User.query.filter_by(email=form.email.data).first():
             # User already exists
-            flash("You've already signed up with that email, log in instead!")
+            flash("An account already exists with that email. Please log in instead.")
             return redirect(url_for('login'))
         secured_password = generate_password_hash(
             form.password.data,
@@ -41,13 +41,9 @@ def login():
         password = form.password.data
         # Find user by email entered.
         user = User.query.filter_by(email=email).first()
-        # Email doesn't exist
-        if not user:
-            flash("That email does not exist, please try again.")
-            return redirect(url_for('login'))
-        # Password incorrect
-        elif not check_password_hash(user.password, password):
-            flash('Password incorrect, please try again.')
+        # Email doesn't exist or password incorrect
+        if not user or not check_password_hash(user.password, password):
+            flash("Incorrect email or password, please try again.")
             return redirect(url_for('login'))
         # Email exists and password correct
         else:
