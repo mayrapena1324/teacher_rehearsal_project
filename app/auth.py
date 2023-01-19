@@ -41,13 +41,9 @@ def login():
         password = form.password.data
         # Find user by email entered.
         user = User.query.filter_by(email=email).first()
-        # Email doesn't exist
-        if not user:
-            flash("Email and/or Password do not match, please try again.")
-            return redirect(url_for('login'))
-        # Password incorrect
-        elif not check_password_hash(user.password, password):
-            flash('Email and/or Password do not match, please try again.')
+        # Email doesn't exist or password incorrect
+        if not user or not check_password_hash(user.password, password):
+            flash("Incorrect email or password, please try again.")
             return redirect(url_for('login'))
         # Email exists and password correct
         else:
