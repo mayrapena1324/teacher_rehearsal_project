@@ -20,7 +20,7 @@ def get_all_rehearsals():
         # Handle the case when the user does not select any option
         # redirect the user to a default ordering
         return redirect(url_for("get_all_rehearsals", order_by="desc"))
-    elif order_by not in ["asc", "desc", "created"]:
+    elif order_by not in ["asc", "desc"]:
         # Handle the case when the user is trying to manipulate the order_by parameter
         # return an error message
         flash("Invalid value for the order_by parameter")
@@ -29,8 +29,6 @@ def get_all_rehearsals():
 
         if order_by == "desc":
             order_by_clause = Rehearsal.date.desc()
-        elif order_by == "created":
-            order_by_clause = Rehearsal.user_id.asc()
         else:
             order_by_clause = Rehearsal.date.asc()
         rehearsals = Rehearsal.query.filter_by(user_id=current_user.id).order_by(order_by_clause)
