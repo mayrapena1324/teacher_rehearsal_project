@@ -14,6 +14,8 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(250))
     first_name = db.Column(db.String(250), nullable=False)
     last_name = db.Column(db.String(250), nullable=False)
+    # Parent Relationship
+    rehearsals = db.relationship('Rehearsal', backref='user')
 
 
 class Rehearsal(db.Model):
@@ -25,6 +27,8 @@ class Rehearsal(db.Model):
     fundamentals = db.Column(db.Text, nullable=True)
     music = db.Column(db.Text, nullable=True)
     goals = db.Column(db.Text, nullable=True)
+    # Child Relationship
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 # CONFIGURE FLASK_LOGIN

@@ -1,56 +1,121 @@
 {% extends "user/templates/user_template.html" %}
-
 {% import "bootstrap/wtf.html" as wtf %}
+
 
 {% block title %}All Rehearsal{% endblock%}
 
+
 {% block main%}
+
+
 <!--Welcome-->
 <div class="container text-center">
     <div class="row">
         <div class="col">
             <h1>Your Rehearsals 🎻</h1>
+            <h2>Today is {{today}}</h2>
         </div>
     </div>
 </div>
 
+
 <!--Create Rehearsal Button-->
-<div class="container text-center">
+<div class="create-rehearsal container text-center">
     <a href="{{ url_for('create') }}" class="btn btn-outline-dark btn-lg">Create Rehearsal</a>
 </div>
 
-<!--All rehearsals Card-->
+
+<!--All rehearsal Cards-->
+
 <div class="container">
-    <div class="card">
-        <div class="card-body">
-            <div class="container text-center">
-                <div class="row">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        {% for group in distinct_groups %}
+        <div class="col mb-4">
+            <div class="card shadow p-3 mb-5 bg-white rounded">
 
-                </div>
-            </div>
+                <div class="card-header">{{ group[0] }}</div>
+                <div class="card-body rehearsal-cards">
+                    <ul class="list-group list-group-flush">
+                        {% for rehearsal in all_rehearsals if group[0] == rehearsal.group %}
+                        <!-- Check if the rehearsal has passed-->
+                        <p class="expired-check">
+                            {% if date_check <= rehearsal.date %}
+                            UPCOMING
+                            {% else %}
+                            PAST
+                            {% endif %}
+                        </p>
+                        <li class="d-flex align-items-center list-group-item">
 
-            <!--View All rehearsals-->
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        {% for rehearsal in all_rehearsals %}
-                        <div class="rehearsal">
-                            <a href="{{ url_for('rehearsal', rehearsal_id=rehearsal.id) }}">
-                                <h3 class="post-date">
-                                    <div class="container">
-                                        {{rehearsal.group }}: Rehearsal - {{rehearsal.date.strftime("%A %d %B, %Y")}}
-                                        <a href="{{url_for('delete_post', rehearsal_id=rehearsal.id) }}">✘</a>
-                                    </div>
 
-                                </h3>
+                            <a class="rehearsal-link" href="{{ url_for('rehearsal', rehearsal_id=rehearsal.id) }}">
+                                <h5 class="rehearsal-date">
+                                    {{rehearsal.date.strftime("%a %d %b, %Y")}}
+                                </h5>
                             </a>
-                            {% endfor %}
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModalCenter{{rehearsal.id}}">
+                                Delete
+                            </button>
+                        </li>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter{{rehearsal.id}}" tabindex="-1"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle{{rehearsal.id}}">
+                                            Deleting Rehearsal Permanently</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>{{rehearsal.group}} rehearsal on {{rehearsal.date.strftime("%a %d %b,
+                                            %Y")}}</h4>
+                                        <p>Are you sure?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-dark"
+                                                data-bs-dismiss="modal">Cancel
+                                        </button>
+
+                                        <form action="{{url_for('delete_rehearsal', rehearsal_id=rehearsal.id)}}"
+                                              method="post">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                            <input type="submit" value="Delete" class="btn btn-outline-danger">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
+
         </div>
+
+        {% endfor %}
     </div>
 </div>
 
+<div class="container sort-form">
+    <form action="{{url_for('get_all_rehearsals')}}" method="get">
+        {{ form.csrf_token }}
+        <label class="select-order-label" for="order_by">Order by:</label>
+        <select name="order_by" id="order_by" onchange="this.form.submit()" class="form-control">
+            <option value="asc" {% if order_by=="asc" %}selected{% endif %}>Oldest first</option>
+            <option value="desc" {% if order_by=="desc" %}selected{% endif %}>Most recent first</option>
+        </select>
+    </form>
+</div>
+
+
 {% endblock%}
+
+
+
+
+

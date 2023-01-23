@@ -1,12 +1,12 @@
 from flask_ckeditor import CKEditorField
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, DateField
-from wtforms.validators import DataRequired, URL
+from wtforms import StringField, SubmitField, PasswordField, DateField, SelectField
+from wtforms.validators import DataRequired, Email
 
 
 # Registration Form
 class RegisterForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email(message="Please enter valid email.")])
     password = PasswordField('Password', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
@@ -24,9 +24,14 @@ class LoginForm(FlaskForm):
 class RehearsalForm(FlaskForm):
     date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
     group = StringField('Group', validators=[DataRequired()])
-    warm_up = CKEditorField('Warmup', validators=[DataRequired()])
-    fundamentals = CKEditorField('Fundamentals', validators=[DataRequired()])
-    music = CKEditorField('Music', validators=[DataRequired()])
-    goals = CKEditorField('Goals', validators=[DataRequired()])
+    warm_up = CKEditorField('Warmup')
+    fundamentals = CKEditorField('Fundamentals')
+    music = CKEditorField('Music')
+    goals = CKEditorField('Goals')
     submit = SubmitField("Save")
     cancel = SubmitField("Cancel")
+
+
+class OrderForm(FlaskForm):
+    order_by = SelectField('Order by', choices=[('desc', 'Most Recent First'), ('asc', 'Oldest First')])
+

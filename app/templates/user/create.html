@@ -17,21 +17,22 @@
 
 <!---->
 <!--Card for rehearsal -->
-<div class="container">
+<div class="container create-rehearsal-card">
     <div class="card shadow p-3 mb-5 bg-white rounded">
         <div class="card-body">
 
             <h5 class="card-title">Create your rehearsal</h5>
-            <form action="/rehearsal/create" method="POST">
+            <form action="/rehearsal/create" method="post">
+                {{ form.csrf_token }}
                 <div class="form-group">
                     <label>Date</label>
-                    <input class="form-control" type="date" name="date">
+                    {{ form.date(class_="form-control") }}
                 </div>
                 <div class="form-group">
                     <label>Group</label>
-                    <input class="form-control" type="text" name="group">
+                    {{ form.group(class_="form-control") }}
                 </div>
-                <button type="submit" class="btn btn-outline-dark">Create</button>
+                {{ form.submit(class_="btn btn-outline-dark") }}
                 <a href="{{url_for('get_all_rehearsals')}}" class="btn btn-outline-danger">Cancel</a>
 
             </form>

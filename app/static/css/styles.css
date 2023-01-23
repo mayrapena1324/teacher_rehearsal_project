@@ -1,5 +1,5 @@
 body{
-   background-image: linear-gradient(to left, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+   background-color: #84D2C5
 }
 h1{
     font-family: 'Passion One', cursive;
@@ -32,3 +32,49 @@ h1{
 .card-nav {
     color: black;
 }
+
+.rehearsal-link {
+    text-decoration: none;
+}
+
+.list-group-item {
+padding-top: 0;
+}
+
+.create-rehearsal {
+margin: 3rem;
+}
+
+.sort-form {
+    width:  25%;
+    margin: 2rem;
+}
+.select-order-label{
+    padding-bottom: 1.5rem;
+}
+.create-rehearsal-card {
+    width: 350px;
+    margin: 3rem, 3rem;
+}
+
+
+.rehearsal-cards {
+    height: 400px;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.expired-check{
+    font-weight: bold;
+}
+
+
+.login-btn{
+
+    margin: 2rem;
+}
+
+.register-link{
+    margin: 2rem;
+}
+
