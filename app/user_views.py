@@ -16,29 +16,9 @@ def check_rehearsal_user(func):
         if requested_rehearsal.user_id != current_user.id:
             abort(403)
         return func(*args, **kwargs)
+
     return wrapper
 
-
-@app.route("/download-group-rehearsals/<group>")
-def download_group_rehearsals(group):
-    # query the rehearsals for the given group and user
-    rehearsals = Rehearsal.query.filter_by(user_id=current_user.id, group=group).all()
-    # FIX THIS TOMORROW TO ENSURE THEY CANT DOWNLOAD OTHERS LESSONS
-    # iterate over the rehearsals and create a pdf for each one
-    for rehearsal in rehearsals:
-        # use Jinja2 to render the HTML template for the pdf
-        html_string = render_template('pdf/rehearsal.html', rehearsal=rehearsal)
-
-        # use WeasyPrint to convert the HTML to a pdf
-        pdf_file = weasyprint.HTML(string=html_string).write_pdf()
-
-        # create a unique filename for the pdf and save it to the server
-        filename = f'{rehearsal.id}.pdf'
-        with open(filename, 'wb') as f:
-            f.write(pdf_file)
-
-    # return the filenames of the generated pdfs
-    return [f'{rehearsal.id}.pdf' for rehearsal in rehearsals]
 
 
 @app.route("/generate-rehearsal/<int:rehearsal_id>")
