@@ -11,6 +11,6 @@ def forbidden(e):
 
 # Not Found Error
 @app.errorhandler(404)
-def forbidden(e):
+def not_found(e):
     app.logger.error(f"Not Found{e}, route: {request.url}")  # pass in the error itself and the error
     return render_template("public/error_handlers/404.html")
