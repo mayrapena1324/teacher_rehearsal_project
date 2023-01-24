@@ -3,17 +3,17 @@
 {% block title %}Home{% endblock%}
 
 {% block main%}
-<div id="landing-card" class="container-fluid text-center" xmlns:logged_in="http://www.w3.org/1999/xhtml">
-    <div class="container-fluid h-100">
+<div class="container text-center h-100">
+    <div class="container-fluid intro-title">
         {% if not logged_in: %}
         <h1>Welcome to Rehearsify 🎻</h1>
         {% else %}
         <h1>Welcome, {{current_user.first_name }} 🎻</h1>
         {% endif %}
     </div>
-    <div class="card text-center mb-3 mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+    <div class="card text-center mb-3 mx-auto shadow p-3 mb-5 bg-white rounded landing-card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">Want to maximize your precious Ensemble time?</h5>
+            <h5 class="card-title">Keep all of your rehearsals in one place and maximize your time!</h5>
             <p class="card-text">Get ready to have an amazing rehearsal and see results</p>
 
             <a

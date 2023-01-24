@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rehearsal PDF</title>
+</head>
+<body>
+
+<h1>{{rehearsal.group}} Rehearsal</h1>
+<hr>
+<p>Date: {{rehearsal.date.strftime("%A %d %B, %Y")}}</p>
+<hr>
+<p>Warm Up: {{rehearsal.warm_up|safe}}</p>
+<hr>
+<p>Fundamentals: {{rehearsal.fundamentals|safe}}</p>
+<hr>
+<p>Music: {{rehearsal.music|safe}}</p>
+<hr>
+<p>Goals: {{rehearsal.goals|safe}}</p>
+
+</body>
+</html>

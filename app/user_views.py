@@ -1,5 +1,6 @@
+import weasyprint
 from flask_login import current_user, login_required
-from flask import render_template, url_for, redirect, flash, request, abort
+from flask import render_template, url_for, redirect, flash, request, abort, make_response, send_file
 from flask import current_app as app
 from sqlalchemy import insert
 from .models import db, Rehearsal, User
@@ -15,7 +16,28 @@ def check_rehearsal_user(func):
         if requested_rehearsal.user_id != current_user.id:
             abort(403)
         return func(*args, **kwargs)
+
     return wrapper
+
+
+
+@app.route("/generate-rehearsal/<int:rehearsal_id>")
+def generate_rehearsal(rehearsal_id):
+    # Get the rehearsal from the database
+    rehearsal = Rehearsal.query.get(rehearsal_id)
+
+    # Render the template to get the HTML content
+    html_content = render_template("user/pdf/rehearsal_pdf.html", rehearsal=rehearsal)
+
+    # Create the PDF
+    pdf_content = weasyprint.HTML(string=html_content).write_pdf()
+
+    # Create the response object with the PDF content
+    response = make_response(pdf_content)
+    response.headers["Content-Type"] = "application/pdf"
+    response.headers["Content-Disposition"] = f"attachment; filename={rehearsal.group}-rehearsal-{rehearsal.date}.pdf"
+
+    return response
 
 
 @app.route("/all-rehearsals", methods=["GET", "POST"])

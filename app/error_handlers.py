@@ -7,3 +7,10 @@ from flask import render_template, request
 def forbidden(e):
     app.logger.error(f"Forbidden Access{e}, route: {request.url}")  # pass in the error itself and the error
     return render_template("public/error_handlers/403.html")
+
+
+# Not Found Error
+@app.errorhandler(404)
+def not_found(e):
+    app.logger.error(f"Not Found{e}, route: {request.url}")  # pass in the error itself and the error
+    return render_template("public/error_handlers/404.html")

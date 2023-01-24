@@ -20,9 +20,9 @@ def create_app():
     else:
         app.config.from_object("config.Config")
 
+    Bootstrap(app)
     db.init_app(app)
     ckeditor.init_app(app)
-    Bootstrap(app)
     csrf.init_app(app)
 
     with app.app_context():

@@ -5,8 +5,18 @@ h1{
     font-family: 'Passion One', cursive;
     color: white;
 }
-#landing-card{
-    margin: 3rem, 3rem;
+.landing-card{
+    display: grid;
+    justify-content: center;
+    align-items; center;
+
+}
+
+.intro-title{
+    display: flex;
+    justify-content: center;
+    align-items; center;
+
 }
 
 .btn {

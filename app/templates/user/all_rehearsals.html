@@ -32,11 +32,11 @@
         {% for group in distinct_groups %}
         <div class="col mb-4">
             <div class="card shadow p-3 mb-5 bg-white rounded">
-
                 <div class="card-header">{{ group[0] }}</div>
                 <div class="card-body rehearsal-cards">
                     <ul class="list-group list-group-flush">
                         {% for rehearsal in all_rehearsals if group[0] == rehearsal.group %}
+
                         <!-- Check if the rehearsal has passed-->
                         <p class="expired-check">
                             {% if date_check <= rehearsal.date %}
@@ -45,6 +45,7 @@
                             PAST
                             {% endif %}
                         </p>
+
                         <li class="d-flex align-items-center list-group-item">
 
 
@@ -53,6 +54,7 @@
                                     {{rehearsal.date.strftime("%a %d %b, %Y")}}
                                 </h5>
                             </a>
+
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                     data-bs-target="#exampleModalCenter{{rehearsal.id}}">
@@ -91,6 +93,7 @@
                             </div>
                         </div>
                         {% endfor %}
+
                     </ul>
                 </div>
             </div>
