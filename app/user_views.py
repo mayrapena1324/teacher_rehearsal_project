@@ -8,6 +8,7 @@ from .forms import RehearsalForm, OrderForm
 import datetime as dt
 from functools import wraps
 
+SAMPLE = 22
 
 def check_rehearsal_user(func):
     @wraps(func)
@@ -15,8 +16,7 @@ def check_rehearsal_user(func):
         requested_rehearsal = Rehearsal.query.get(kwargs["rehearsal_id"])
         if requested_rehearsal.user_id != current_user.id:
             abort(403)
-        return func(*args, **kwargs)
-
+            return
     return wrapper
 
 
