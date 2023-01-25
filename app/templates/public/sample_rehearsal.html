@@ -1,10 +1,10 @@
-{% extends "user/templates/rehearsal_template.html" %}
-
+{% extends "public/templates/public_template.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}Rehearsal{% endblock%}
 
-{% block main%}
+{% block main %}
+
 
 <!--Card for rehearsal -->
 <div class="container">
@@ -12,19 +12,19 @@
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link card-nav active" href="{{ url_for('rehearsal', rehearsal_id=rehearsal.id) }}">Tuning</a>
+                    <a class="nav-link card-nav active" href="{{ url_for('sample_rehearsal') }}">Tuning</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('warm_up', rehearsal_id=rehearsal.id) }}">Warm up</a>
+                    <a class="nav-link card-nav" href="{{ url_for('sample_warm_up') }}">Warm up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('fundamentals', rehearsal_id=rehearsal.id) }}">Fundamentals</a>
+                    <a class="nav-link card-nav" href="{{ url_for('sample_fundamentals') }}">Fundamentals</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('music', rehearsal_id=rehearsal.id) }}">Music</a>
+                    <a class="nav-link card-nav" href="{{ url_for('sample_music') }}">Music</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link card-nav" href="{{ url_for('goals', rehearsal_id=rehearsal.id) }}">Goals</a>
+                    <a class="nav-link card-nav" href="{{ url_for('sample_goals') }}">Goals</a>
                 </li>
             </ul>
         </div>
@@ -39,10 +39,10 @@
                     </iframe>
                 </div>
             </div>
-            <a class="btn btn-outline-warning"
-               href="{{ url_for('edit_rehearsal', rehearsal_id=rehearsal.id) }}">Edit Rehearsal</a>
+            <a class="btn btn-outline-dark disabled"
+               href="#">Edit Rehearsal</a>
         </div>
     </div>
 </div>
 
-{% endblock%}
+{% endblock %}

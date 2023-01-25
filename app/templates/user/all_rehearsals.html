@@ -37,7 +37,7 @@
                     <ul class="list-group list-group-flush">
                         {% for rehearsal in all_rehearsals if group[0] == rehearsal.group %}
 
-                        <!-- Check if the rehearsal has passed-->
+                       <!-- Check if the rehearsal has passed-->
                         <p class="expired-check">
                             {% if date_check <= rehearsal.date %}
                             UPCOMING
