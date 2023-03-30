@@ -8,6 +8,7 @@ from .forms import RehearsalForm, OrderForm
 import datetime as dt
 from functools import wraps
 
+SAMPLE = 27
 
 def check_rehearsal_user(func):
     @wraps(func)
