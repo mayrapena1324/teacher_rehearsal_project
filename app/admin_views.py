@@ -2,8 +2,7 @@ from functools import wraps
 
 from flask_login import current_user
 
-from app import app
-from flask import render_template, abort
+from flask import abort
 
 
 # Create admin-only decorator
